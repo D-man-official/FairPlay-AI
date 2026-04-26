@@ -1,5 +1,4 @@
-
-  let players = [];
+let players = [];
   let playerIdCounter = 0;
   let lastResult = null;
 
@@ -98,24 +97,77 @@
   }
 
   // ─── DEMO DATA ───────────────────────────────
+  const DEMO_POOL = [
+    // Batsmen
+    { name: 'Rohit Bhai',    role: 'batsman',      batting:[8,10], bowling:[3,6],  fielding:[6,9],  experience:[7,10] },
+    { name: 'Manik Da',      role: 'batsman',      batting:[7,9],  bowling:[2,5],  fielding:[6,8],  experience:[6,9]  },
+    { name: 'Arjun',         role: 'batsman',      batting:[7,9],  bowling:[2,4],  fielding:[5,7],  experience:[6,9]  },
+    { name: 'Subho',         role: 'batsman',      batting:[6,9],  bowling:[2,5],  fielding:[5,8],  experience:[5,8]  },
+    { name: 'Bikash',        role: 'batsman',      batting:[7,9],  bowling:[3,5],  fielding:[6,8],  experience:[6,8]  },
+    { name: 'Nikhil',        role: 'batsman',      batting:[6,8],  bowling:[2,5],  fielding:[5,7],  experience:[5,7]  },
+    { name: 'Sourav Bhai',   role: 'batsman',      batting:[8,10], bowling:[2,4],  fielding:[5,7],  experience:[7,10] },
+    { name: 'Khokon',        role: 'batsman',      batting:[6,8],  bowling:[2,4],  fielding:[5,7],  experience:[4,7]  },
+    { name: 'Avijit',        role: 'batsman',      batting:[7,9],  bowling:[3,5],  fielding:[6,8],  experience:[5,8]  },
+    { name: 'Pritam',        role: 'batsman',      batting:[6,8],  bowling:[2,4],  fielding:[5,7],  experience:[5,7]  },
+    // Bowlers
+    { name: 'Pappu',         role: 'bowler',       batting:[2,4],  bowling:[7,9],  fielding:[5,7],  experience:[3,5]  },
+    { name: 'Chintu',        role: 'bowler',       batting:[3,5],  bowling:[7,9],  fielding:[5,7],  experience:[3,6]  },
+    { name: 'Kuntal',        role: 'bowler',       batting:[4,6],  bowling:[7,9],  fielding:[6,8],  experience:[4,6]  },
+    { name: 'Bappa',         role: 'bowler',       batting:[2,4],  bowling:[6,8],  fielding:[4,6],  experience:[2,4]  },
+    { name: 'Ratan',         role: 'bowler',       batting:[3,5],  bowling:[7,9],  fielding:[5,7],  experience:[3,5]  },
+    { name: 'Mithun',        role: 'bowler',       batting:[3,5],  bowling:[7,10], fielding:[5,8],  experience:[4,7]  },
+    { name: 'Sanjoy',        role: 'bowler',       batting:[2,5],  bowling:[6,9],  fielding:[4,7],  experience:[3,5]  },
+    { name: 'Pulak',         role: 'bowler',       batting:[3,5],  bowling:[7,9],  fielding:[5,7],  experience:[3,6]  },
+    { name: 'Animesh',       role: 'bowler',       batting:[2,4],  bowling:[6,8],  fielding:[4,6],  experience:[2,5]  },
+    { name: 'Debashis',      role: 'bowler',       batting:[3,5],  bowling:[7,9],  fielding:[5,7],  experience:[4,6]  },
+    // All-Rounders
+    { name: 'Sibu Da',       role: 'allrounder',   batting:[7,9],  bowling:[5,8],  fielding:[7,9],  experience:[7,9]  },
+    { name: 'Tapas',         role: 'allrounder',   batting:[5,8],  bowling:[6,8],  fielding:[5,7],  experience:[4,7]  },
+    { name: 'Suman',         role: 'allrounder',   batting:[6,8],  bowling:[4,7],  fielding:[5,8],  experience:[5,7]  },
+    { name: 'Dipak',         role: 'allrounder',   batting:[5,7],  bowling:[5,7],  fielding:[5,7],  experience:[3,6]  },
+    { name: 'Prosenjit',     role: 'allrounder',   batting:[6,8],  bowling:[5,8],  fielding:[6,8],  experience:[5,8]  },
+    { name: 'Rana',          role: 'allrounder',   batting:[6,8],  bowling:[5,7],  fielding:[6,8],  experience:[5,8]  },
+    { name: 'Goutam',        role: 'allrounder',   batting:[5,8],  bowling:[5,7],  fielding:[5,7],  experience:[4,7]  },
+    { name: 'Babu Dada',     role: 'allrounder',   batting:[6,9],  bowling:[5,8],  fielding:[6,8],  experience:[6,9]  },
+    { name: 'Tarak',         role: 'allrounder',   batting:[5,7],  bowling:[5,8],  fielding:[5,7],  experience:[3,6]  },
+    { name: 'Pradip',        role: 'allrounder',   batting:[6,8],  bowling:[4,7],  fielding:[5,7],  experience:[4,7]  },
+    // Wicket-Keepers
+    { name: 'Raju Keeper',   role: 'wicketkeeper', batting:[4,7],  bowling:[2,4],  fielding:[8,10], experience:[6,9]  },
+    { name: 'Montu Gloves',  role: 'wicketkeeper', batting:[5,7],  bowling:[2,4],  fielding:[7,9],  experience:[5,8]  },
+    { name: 'Sumon WK',      role: 'wicketkeeper', batting:[4,6],  bowling:[2,4],  fielding:[7,9],  experience:[4,7]  },
+    { name: 'Babai Keeper',  role: 'wicketkeeper', batting:[5,7],  bowling:[2,4],  fielding:[8,10], experience:[5,8]  },
+  ];
+
+  function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   function loadDemo() {
     players = [];
     playerIdCounter = 0;
-    const demo = [
-      { name: 'Rohit Bhai', batting: 9, bowling: 5, fielding: 7, experience: 9, role: 'batsman' },
-      { name: 'Pappu', batting: 3, bowling: 7, fielding: 5, experience: 3, role: 'bowler' },
-      { name: 'Sibu Da', batting: 8, bowling: 6, fielding: 8, experience: 8, role: 'allrounder' },
-      { name: 'Chintu', batting: 4, bowling: 8, fielding: 6, experience: 4, role: 'bowler' },
-      { name: 'Manik', batting: 7, bowling: 4, fielding: 9, experience: 6, role: 'batsman' },
-      { name: 'Raju Keeper', batting: 5, bowling: 3, fielding: 8, experience: 7, role: 'wicketkeeper' },
-      { name: 'Tapas', batting: 6, bowling: 7, fielding: 5, experience: 5, role: 'allrounder' },
-      { name: 'Bappa', batting: 2, bowling: 6, fielding: 4, experience: 2, role: 'bowler' },
-      { name: 'Suman', batting: 7, bowling: 5, fielding: 6, experience: 6, role: 'allrounder' },
-      { name: 'Kuntal', batting: 5, bowling: 8, fielding: 7, experience: 4, role: 'bowler' },
-      { name: 'Arjun', batting: 8, bowling: 3, fielding: 5, experience: 7, role: 'batsman' },
-      { name: 'Dipak', batting: 4, bowling: 5, fielding: 6, experience: 3, role: 'allrounder' },
-    ];
-    demo.forEach(d => { players.push({ id: ++playerIdCounter, ...d }); });
+
+    // Shuffle pool and always guarantee at least 1 wicket-keeper
+    const wkPool    = DEMO_POOL.filter(p => p.role === 'wicketkeeper');
+    const otherPool = DEMO_POOL.filter(p => p.role !== 'wicketkeeper');
+
+    // Pick 1 random WK + 11 from the rest (shuffled), total = 12
+    const shuffleArr = arr => arr.sort(() => Math.random() - 0.5);
+    const pickedWK    = shuffleArr([...wkPool])[0];
+    const pickedOther = shuffleArr([...otherPool]).slice(0, 11);
+    const picked      = shuffleArr([pickedWK, ...pickedOther]);
+
+    picked.forEach(template => {
+      players.push({
+        id: ++playerIdCounter,
+        name:       template.name,
+        role:       template.role,
+        batting:    randInt(...template.batting),
+        bowling:    randInt(...template.bowling),
+        fielding:   randInt(...template.fielding),
+        experience: randInt(...template.experience),
+      });
+    });
+
     renderPlayers();
     scrollToForm();
     showError('✅ 12 demo players loaded! Hit Generate now.', 'green');
